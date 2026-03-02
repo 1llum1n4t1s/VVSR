@@ -1,0 +1,18 @@
+{
+  "extensionName": {
+    "message": "VideoSR Assist",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "Enable NVIDIA RTX Super Resolution for video streaming services to enhance video quality in fullscreen mode.",
+    "description": "Extension description"
+  },
+  "badgeOn": {
+    "message": "ON",
+    "description": "Badge text when extension is enabled"
+  },
+  "badgeOff": {
+    "message": "OFF",
+    "description": "Badge text when extension is disabled"
+  }
+}

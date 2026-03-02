@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo Marquee - 1400x560</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1400px;
+      height: 560px;
+      background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .decorative-circles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .circle1 { width: 350px; height: 350px; top: -100px; left: -100px; }
+    .circle2 { width: 280px; height: 280px; bottom: -80px; right: -80px; }
+    .circle3 { width: 180px; height: 180px; top: 40%; left: 45%; opacity: 0.5; }
+
+    .content-left {
+      position: relative;
+      z-index: 1;
+      color: white;
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .logo { font-size: 64px; margin-bottom: 16px; }
+
+    .main-title {
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      opacity: 0.95;
+      margin-bottom: 28px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      line-height: 1.5;
+    }
+
+    .badges-container {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .badge-icon { font-size: 16px; }
+
+    .stats-banner {
+      display: flex;
+      gap: 32px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      padding: 16px 32px;
+      border-radius: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 900;
+      display: block;
+      margin-bottom: 4px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      opacity: 0.9;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .content-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 18px 22px;
+      width: 340px;
+      color: white;
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .feature-icon { font-size: 28px; }
+    .feature-title { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
+    .feature-description { font-size: 12px; opacity: 0.9; line-height: 1.5; }
+
+    .version-badge {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="decorative-circles">
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+  </div>
+
+  <div class="version-badge">v1.0.0</div>
+
+  <div class="content-left">
+    <div class="logo">🎬</div>
+    <h1 class="main-title">VideoSR<br>Assist</h1>
+    <p class="subtitle">NVIDIA RTX Video Super Resolution で<br>ストリーミング映像を自動的に高画質化</p>
+
+    <div class="badges-container">
+      <div class="badge">
+        <span class="badge-icon">🎥</span>
+        <span>自動検出</span>
+      </div>
+      <div class="badge">
+        <span class="badge-icon">⚡</span>
+        <span>RTX VSR</span>
+      </div>
+      <div class="badge">
+        <span class="badge-icon">🚀</span>
+        <span>Manifest V3</span>
+      </div>
+      <div class="badge">
+        <span class="badge-icon">🔄</span>
+        <span>ON/OFF</span>
+      </div>
+    </div>
+
+    <div class="stats-banner">
+      <div class="stat-item">
+        <span class="stat-number">60+</span>
+        <span class="stat-label">対応サービス</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">⚡</span>
+        <span class="stat-label">ゼロ遅延</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">RTX</span>
+        <span class="stat-label">AI 超解像</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-right">
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🎥</span>
+        <h3 class="feature-title">動画プレーヤー自動検出</h3>
+      </div>
+      <p class="feature-description">ページ上の動画要素を自動検出し、VSR をトリガーするオーバーレイを配置</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🖥️</span>
+        <h3 class="feature-title">幅広いサービス対応</h3>
+      </div>
+      <p class="feature-description">Netflix、Prime Video、U-NEXT、ABEMA など主要サービスに対応</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🔄</span>
+        <h3 class="feature-title">ワンクリック切り替え</h3>
+      </div>
+      <p class="feature-description">拡張機能アイコンをクリックするだけで有効/無効を切り替え</p>
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    const lang = new URLSearchParams(location.search).get('lang') || 'ja';
+    if (lang !== 'en') return;
+    document.documentElement.lang = 'en';
+    [
+      ['.subtitle', 'Automatically enhance streaming<br>video with NVIDIA RTX Video Super Resolution'],
+      ['.badge:nth-child(1) span:last-child', 'Auto Detect'],
+      ['.stat-item:nth-child(1) .stat-label', 'Services'],
+      ['.stat-item:nth-child(2) .stat-label', 'Zero Latency'],
+      ['.stat-item:nth-child(3) .stat-label', 'AI Upscaling'],
+      ['.feature-card:nth-child(1) .feature-title', 'Auto Video Detection'],
+      ['.feature-card:nth-child(1) .feature-description', 'Detects video elements and places VSR overlay automatically'],
+      ['.feature-card:nth-child(2) .feature-title', 'Wide Service Support'],
+      ['.feature-card:nth-child(2) .feature-description', 'Works with Netflix, Prime Video, YouTube, and more'],
+      ['.feature-card:nth-child(3) .feature-title', 'One-Click Toggle'],
+      ['.feature-card:nth-child(3) .feature-description', 'Toggle ON/OFF with a single click on the extension icon'],
+    ].forEach(([sel, html]) => {
+      const el = document.querySelector(sel);
+      if (el) el.innerHTML = html;
+    });
+  })();
+  </script>
+</body>
+</html>

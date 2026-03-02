@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show Pillow)",
+      "Bash(pip3 show Pillow)",
+      "Bash(pip install Pillow)",
+      "Bash(python -:*)"
+    ]
+  }
+}

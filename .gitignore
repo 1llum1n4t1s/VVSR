@@ -1,0 +1,9 @@
+# Generated files
+videosr-assist.zip
+temp-build/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*~

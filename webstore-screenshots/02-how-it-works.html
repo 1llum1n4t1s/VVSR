@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenshot 2 - How It Works</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1280px;
+      height: 800px;
+      background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      position: relative;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      color: white;
+    }
+
+    .main-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .subtitle {
+      font-size: 20px;
+      opacity: 0.9;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-container {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+      max-width: 1100px;
+      align-items: center;
+    }
+
+    .comparison-panel {
+      flex: 1;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .before .panel-label {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .after .panel-label {
+      background: linear-gradient(135deg, #00ddff 0%, #00ff88 100%);
+      color: #0a2a3a;
+    }
+
+    .panel-content {
+      padding: 56px 28px 28px;
+    }
+
+    /* Fake video frame mockups */
+    .video-frame {
+      width: 100%;
+      height: 240px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .before .video-frame {
+      background: linear-gradient(135deg, #2a3040 0%, #3a4050 50%, #2a3545 100%);
+      filter: blur(0.5px);
+    }
+
+    .after .video-frame {
+      background: linear-gradient(135deg, #1a2a4a 0%, #2a4a6a 50%, #1a3a5a 100%);
+    }
+
+    /* Pixel blocks to represent low res */
+    .pixel-grid {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 2px;
+      width: 160px;
+      height: 100px;
+    }
+
+    .pixel {
+      border-radius: 1px;
+    }
+
+    .before .pixel { opacity: 0.6; }
+    .after .pixel { opacity: 0.9; }
+
+    .quality-label {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .before .quality-label { color: #ff8888; }
+    .after .quality-label { color: #00ffbb; }
+
+    .detail-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .detail-list li {
+      font-size: 14px;
+      color: #555;
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detail-list .icon-bad { color: #f5576c; font-size: 16px; }
+    .detail-list .icon-good { color: #00cc88; font-size: 16px; }
+
+    .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+
+    .features-banner {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 14px 32px;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .feature-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-badge span:first-child { font-size: 18px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 class="main-title">動画品質を自動的に向上</h1>
+    <p class="subtitle">NVIDIA RTX Video Super Resolution でストリーミング映像をアップスケール</p>
+  </div>
+
+  <div class="comparison-container">
+    <div class="comparison-panel before">
+      <div class="panel-label">BEFORE 標準画質</div>
+      <div class="panel-content">
+        <div class="video-frame">
+          <div class="pixel-grid">
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#3a5060"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#5a6a7a"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#5a6a7a"></div>
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#5a6a7a"></div>
+            <div class="pixel" style="background:#3a5060"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#5a6a7a"></div>
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#3a5060"></div>
+            <div class="pixel" style="background:#5a6a7a"></div>
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+            <div class="pixel" style="background:#3a4a5a"></div>
+            <div class="pixel" style="background:#5a6a7a"></div>
+            <div class="pixel" style="background:#4a5a6a"></div>
+          </div>
+          <div class="quality-label">720p</div>
+        </div>
+        <ul class="detail-list">
+          <li><span class="icon-bad">✕</span> 低解像度の映像</li>
+          <li><span class="icon-bad">✕</span> ピクセルが目立つ</li>
+          <li><span class="icon-bad">✕</span> ディテールの欠落</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="comparison-panel after">
+      <div class="panel-label">AFTER RTX VSR 適用</div>
+      <div class="panel-content">
+        <div class="video-frame">
+          <div class="pixel-grid" style="gap:0; filter:blur(0);">
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#2a5a70"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#4a6a8a"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#4a6a8a"></div>
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#4a6a8a"></div>
+            <div class="pixel" style="background:#2a5a70"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#4a6a8a"></div>
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#2a5a70"></div>
+            <div class="pixel" style="background:#4a6a8a"></div>
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+            <div class="pixel" style="background:#2a4a6a"></div>
+            <div class="pixel" style="background:#4a6a8a"></div>
+            <div class="pixel" style="background:#3a5a7a"></div>
+          </div>
+          <div class="quality-label">4K Enhanced</div>
+        </div>
+        <ul class="detail-list">
+          <li><span class="icon-good">✓</span> AI による超解像処理</li>
+          <li><span class="icon-good">✓</span> シャープで鮮明な映像</li>
+          <li><span class="icon-good">✓</span> ディテールの復元</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="features-banner">
+    <div class="feature-badge">
+      <span>🎥</span>
+      <span>自動検出</span>
+    </div>
+    <div class="feature-badge">
+      <span>⚡</span>
+      <span>RTX 処理</span>
+    </div>
+    <div class="feature-badge">
+      <span>🖥️</span>
+      <span>60+サイト対応</span>
+    </div>
+    <div class="feature-badge">
+      <span>🚀</span>
+      <span>Manifest V3</span>
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    const lang = new URLSearchParams(location.search).get('lang') || 'ja';
+    if (lang !== 'en') return;
+    document.documentElement.lang = 'en';
+    [
+      ['.main-title', 'Enhance Video Quality Automatically'],
+      ['.subtitle', 'Upscale streaming video with NVIDIA RTX Video Super Resolution'],
+      ['.before .panel-label', 'BEFORE Standard'],
+      ['.after .panel-label', 'AFTER RTX VSR'],
+      ['.before .detail-list li:nth-child(1)', '<span class="icon-bad">✕</span> Low resolution video'],
+      ['.before .detail-list li:nth-child(2)', '<span class="icon-bad">✕</span> Visible pixelation'],
+      ['.before .detail-list li:nth-child(3)', '<span class="icon-bad">✕</span> Loss of detail'],
+      ['.after .detail-list li:nth-child(1)', '<span class="icon-good">✓</span> AI super resolution'],
+      ['.after .detail-list li:nth-child(2)', '<span class="icon-good">✓</span> Sharp and clear video'],
+      ['.after .detail-list li:nth-child(3)', '<span class="icon-good">✓</span> Detail restoration'],
+      ['.feature-badge:nth-child(1) span:last-child', 'Auto Detect'],
+      ['.feature-badge:nth-child(2) span:last-child', 'RTX Processing'],
+      ['.feature-badge:nth-child(3) span:last-child', '60+ Sites'],
+    ].forEach(([sel, html]) => {
+      const el = document.querySelector(sel);
+      if (el) el.innerHTML = html;
+    });
+  })();
+  </script>
+</body>
+</html>
