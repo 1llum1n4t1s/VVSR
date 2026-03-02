@@ -18,7 +18,6 @@
 
 ### Chrome ウェブストアから
 
-https://chromewebstore.google.com/detail/odgkllkpohmcplibemdjhgblambiphhc
 
 ### 手動インストール
 
