@@ -15,18 +15,17 @@ NVIDIA RTX Video Super Resolution を任意の HTTPS サイトで自動的に有
 
 ## 必要環境
 
-| 項目 | 要件 |
-|------|------|
-| GPU | NVIDIA RTX シリーズ（RTX 20/30/40/50） |
-| ドライバー | RTX Video Super Resolution 対応の最新版 |
-| OS | Windows 10 / 11 |
-| ブラウザ | Chrome または Chromium 系（ハードウェアアクセラレーション有効） |
+| 項目       | 要件                                                            |
+| ---------- | --------------------------------------------------------------- |
+| GPU        | NVIDIA RTX シリーズ（RTX 20/30/40/50）                          |
+| ドライバー | RTX Video Super Resolution 対応の最新版                         |
+| OS         | Windows 10 / 11                                                 |
+| ブラウザ   | Chrome または Chromium 系（ハードウェアアクセラレーション有効） |
 
 ## インストール
 
 ### Chrome ウェブストア
 
-[VideoSRアシスト](https://chromewebstore.google.com/detail/odgkllkpohmcplibemdjhgblambiphhc)
 
 ### 手動インストール
 
