@@ -78,9 +78,25 @@ No `host_permissions` needed (declarative content scripts + storage API only).
 
 `package.json` exists solely for the puppeteer devDependency used by the screenshot generator.
 
+### Screenshot generation
+
+`webstore-screenshots/*.html` — self-contained HTML templates (CSS + inline `<script>` for i18n). `scripts/generate-screenshots.js` opens each template via Puppeteer with `?lang=ja` and `?lang=en`, captures PNG to `webstore-images/{ja,en}/`.
+
+- `01`〜`03`: Store screenshots (1280×800)
+- `04`: Small promo tile (440×280)
+- `05`: Marquee promo tile (1400×560)
+
 ## Constraints
 
 - Overlay uses fixed positioning to trigger VSR in both fullscreen and windowed modes
 - Requires NVIDIA RTX GPU + driver with RTX SR enabled
 - Chrome hardware acceleration must be enabled
-- `docs/` contains Chrome Web Store submission materials (STORE_GUIDE, PRIVACY_POLICY, TESTING)
+- `https://*/*` content script triggers Chrome Web Store "broad host permissions" review (longer review, not rejection). `activeTab` is not an alternative — it would require per-tab manual activation, breaking automatic video detection.
+
+## Store Submission
+
+`docs/STORE_GUIDE.md` has copy-paste ready text for Developer Console (Japanese + English descriptions, permission justifications, screenshot upload mapping).
+
+Other docs:
+- `docs/PRIVACY_POLICY.md` — required for store listing, states no data collection
+- `docs/TESTING.md` — test procedures for store reviewers
