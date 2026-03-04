@@ -26,7 +26,7 @@ No linter, no tests.
 src/content.js          IIFE, injected on every HTTPS page
   ├─ Phase 1 (lightweight): MutationObserver only (video node filter)
   ├─ Phase 2 (on video found): + scroll/resize/fullscreen listeners
-  └─ processVideos()  → find largest <video> by area → 1x1 overlay
+  └─ processVideos()  → find largest <video> by area → full-area GPU overlay
 
 src/service_worker.js   Extension toggle + badge
   └─ action.onClicked → storage.local.set({ enabled }) → badge update
@@ -39,8 +39,11 @@ SW writes `enabled` to `chrome.storage.local`. Content script listens via `chrom
 ### Overlay positioning
 
 - `position: fixed` + `getBoundingClientRect()` tracking viewport coords
+- Overlay covers full video area (width/height match video dimensions)
+- GPU compositor layer forced via `will-change:transform` + `translateZ(0)` + `backface-visibility:hidden` + `contain:strict`
 - `z-index: 2147483647` for compositor layer priority
-- Scroll listener (`capture: true`, rAF-throttled) keeps overlay aligned
+- `opacity: 0.01` — visually imperceptible but creates a paint layer
+- Scroll listener (`capture: true, passive: true`, rAF-throttled) keeps overlay aligned
 - Forces NVIDIA driver to recognize VSR layer in both fullscreen and windowed modes
 
 ### Lazy listener initialization

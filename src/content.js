@@ -125,9 +125,13 @@
     removeOverlay();
 
     _overlay = document.createElement('div');
+    // GPU コンポジタレイヤーを強制的に作成し、NVIDIA VSR の検出確率を上げる
+    // will-change + translateZ(0) でレイヤー昇格、contain:strict で描画隔離
     _overlay.style.cssText =
       'position:fixed;width:1px;height:1px;background:#000;' +
-      'opacity:0.01;pointer-events:none;z-index:2147483647;top:0;left:0;margin:0;padding:0';
+      'opacity:0.01;pointer-events:none;z-index:2147483647;top:0;left:0;' +
+      'margin:0;padding:0;will-change:transform;transform:translateZ(0);' +
+      'backface-visibility:hidden;contain:strict';
     _overlay.setAttribute('data-vsr-overlay', 'true');
 
     _insertOverlayAfterVideo(video);
@@ -155,18 +159,21 @@
   }
 
   /**
-   * オーバーレイの位置を更新する
+   * オーバーレイの位置・サイズを更新する
    * 常に position:fixed + ビューポート座標で配置し、
    * NVIDIA ドライバにフルスクリーンと同じレイヤ構成を認識させる。
-   * position / zIndex は初期スタイルで設定済みのため top / left のみ更新。
+   * ビデオ全面をカバーすることで VSR がレイヤを認識しやすくなる。
    */
   function _updateOverlayPosition() {
     if (!_currentVideo || !_overlay) return;
 
     try {
       const rect = _currentVideo.getBoundingClientRect();
-      _overlay.style.top = rect.top + 'px';
-      _overlay.style.left = rect.left + 'px';
+      const s = _overlay.style;
+      s.top = rect.top + 'px';
+      s.left = rect.left + 'px';
+      s.width = rect.width + 'px';
+      s.height = rect.height + 'px';
     } catch (_) {
       // 位置計算エラーは無視
     }
@@ -228,7 +235,7 @@
   function _isVideoRelatedNode(node) {
     if (node.nodeType !== Node.ELEMENT_NODE) return false;
     const el = /** @type {Element} */ (node);
-    return el.tagName === 'VIDEO' || (el.getElementsByTagName && el.getElementsByTagName('video').length > 0);
+    return el.tagName === 'VIDEO' || el.querySelector('video') !== null;
   }
 
   /**
@@ -347,17 +354,17 @@
 
   // イベントリスナー参照（解除用に名前付き関数化）
   function _onFullscreenChange() {
-    setTimeout(() => {
-      _repositionOverlay();
-      _updateOverlayPosition();
-    }, SETTLE_DELAY_MS);
+    // フルスクリーン切替時は最大 video が変わる可能性があるため完全再評価
+    setTimeout(processVideos, SETTLE_DELAY_MS);
   }
   function _onVisibilityChange() {
-    _repositionOverlay();
-    _updateOverlayPosition();
+    // 非表示→表示復帰時のみ位置を再同期
+    if (document.visibilityState === 'visible') {
+      _repositionOverlay();
+      _updateOverlayPosition();
+    }
   }
   function _onWindowResize() {
-    _repositionOverlay();
     processVideos();
   }
 
@@ -371,7 +378,7 @@
     document.addEventListener('fullscreenchange', _onFullscreenChange);
     document.addEventListener('visibilitychange', _onVisibilityChange);
     window.addEventListener('resize', _onWindowResize);
-    window.addEventListener('scroll', _schedulePositionUpdate, true);
+    window.addEventListener('scroll', _schedulePositionUpdate, { capture: true, passive: true });
   }
 
   /** video が全て消えたときにフルリスナーを解除する */
@@ -381,7 +388,7 @@
     document.removeEventListener('fullscreenchange', _onFullscreenChange);
     document.removeEventListener('visibilitychange', _onVisibilityChange);
     window.removeEventListener('resize', _onWindowResize);
-    window.removeEventListener('scroll', _schedulePositionUpdate, true);
+    window.removeEventListener('scroll', _schedulePositionUpdate, { capture: true });
   }
 
   function _start() {
