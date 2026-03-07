@@ -167,7 +167,7 @@
     <div class="circle circle3"></div>
   </div>
 
-  <div class="version-badge">v1.0.4</div>
+  <div class="version-badge">v1.0.6</div>
 
   <div class="content">
     <div class="logo">🎬</div>
@@ -224,28 +224,5 @@
     </div>
   </div>
 
-  <script>
-  (() => {
-    const lang = new URLSearchParams(location.search).get('lang') || 'ja';
-    if (lang !== 'en') return;
-    document.documentElement.lang = 'en';
-    [
-      ['.subtitle', 'Enhance streaming video with RTX Video Super Resolution'],
-      ['.stat-item:nth-child(1) .stat-label', 'Services'],
-      ['.stat-item:nth-child(2) .stat-label', 'Zero Latency'],
-      ['.stat-item:nth-child(3) .stat-label', 'AI Upscaling'],
-      ['.feature-card:nth-child(1) .feature-title', 'Auto Detect'],
-      ['.feature-card:nth-child(1) .feature-description', 'Automatically detects video players and triggers RTX VSR'],
-      ['.feature-card:nth-child(2) .feature-title', 'Windowed Mode'],
-      ['.feature-card:nth-child(2) .feature-description', 'May enable VSR even without fullscreen depending on your environment'],
-      ['.feature-card:nth-child(3) .feature-title', 'One Click'],
-      ['.feature-card:nth-child(3) .feature-description', 'Easily toggle ON/OFF with a single click'],
-      ['.services-title', 'Supported Streaming Services'],
-    ].forEach(([sel, html]) => {
-      const el = document.querySelector(sel);
-      if (el) el.innerHTML = html;
-    });
-  })();
-  </script>
 </body>
 </html>

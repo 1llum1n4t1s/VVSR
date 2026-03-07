@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Enable NVIDIA RTX Super Resolution for video streaming services to enhance video quality in fullscreen mode.",
+    "message": "May help enable NVIDIA RTX Video Super Resolution in environments where it doesn't activate normally.",
     "description": "Extension description"
   },
   "badgeOn": {

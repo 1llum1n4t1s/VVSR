@@ -1,14 +1,14 @@
-// Chrome Web Store 用スクリーンショット画像の自動生成スクリプト（多言語対応）
-// 依存: npx puppeteer（グローバルインストール不要）
+// Chrome Web Store用のスクリーンショット画像を自動生成するスクリプト
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 
+// 出力ディレクトリのパス
 const OUTPUT_DIR = './webstore-images';
-const LANGUAGES = ['ja', 'en'];
 
+// 生成する画像の各設定項目（入力パス、出力名、サイズ）
 const IMAGE_CONFIGS = [
-  // スクリーンショット: 1280x800
+  // スクリーンショット：1280x800
   {
     input: 'webstore-screenshots/01-feature-overview.html',
     output: '01-feature-overview-1280x800.png',
@@ -27,14 +27,14 @@ const IMAGE_CONFIGS = [
     width: 1280,
     height: 800
   },
-  // プロモーションタイル（小）: 440x280
+  // プロモーション タイル（小）：440x280
   {
     input: 'webstore-screenshots/04-promo-small.html',
     output: 'promo-small-440x280.png',
     width: 440,
     height: 280
   },
-  // マーキープロモーションタイル: 1400x560
+  // マーキー プロモーション タイル：1400x560
   {
     input: 'webstore-screenshots/05-promo-marquee.html',
     output: 'promo-marquee-1400x560.png',
@@ -43,19 +43,23 @@ const IMAGE_CONFIGS = [
   }
 ];
 
-async function generateScreenshot(browser, htmlPath, outputPath, width, height, lang) {
+/**
+ * 共有ブラウザインスタンスを使用してHTMLファイルから画像を生成
+ */
+async function generateScreenshot(browser, htmlPath, outputPath, width, height) {
   const page = await browser.newPage();
+
   try {
     await page.setViewport({ width, height, deviceScaleFactor: 1 });
 
     const absolutePath = path.resolve(htmlPath);
-    await page.goto(`file://${absolutePath}?lang=${lang}`, {
+    await page.goto(`file://${absolutePath}`, {
       waitUntil: 'networkidle0',
       timeout: 30000
     });
 
-    // フォント読み込み・レンダリング・i18nスクリプト完了待ち
-    await new Promise(r => setTimeout(r, 2000));
+    // フォントの読み込みやレンダリングの完了を待機
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     await page.screenshot({
       path: outputPath,
@@ -73,14 +77,10 @@ async function generateScreenshot(browser, htmlPath, outputPath, width, height, 
 }
 
 async function main() {
-  console.log('Screenshot generation (multilingual)...\n');
+  console.log('Screenshot generation...\n');
 
-  // 言語別ディレクトリ作成
-  for (const lang of LANGUAGES) {
-    const langDir = path.join(OUTPUT_DIR, lang);
-    if (!fs.existsSync(langDir)) {
-      fs.mkdirSync(langDir, { recursive: true });
-    }
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
   const browser = await puppeteer.launch({
@@ -89,35 +89,24 @@ async function main() {
   });
 
   try {
-    // 全言語×全画像を並列生成
-    const tasks = LANGUAGES.flatMap(lang =>
-      IMAGE_CONFIGS.map(config => {
-        if (!fs.existsSync(config.input)) {
-          console.error(`  NG: ${config.input} not found`);
-          return Promise.resolve();
-        }
-        const outputPath = path.join(OUTPUT_DIR, lang, config.output);
-        return generateScreenshot(
-          browser, config.input, outputPath,
-          config.width, config.height, lang
-        );
-      })
-    );
-    await Promise.all(tasks);
+    await Promise.all(IMAGE_CONFIGS.map(config => {
+      if (!fs.existsSync(config.input)) {
+        console.error(`  NG: ${config.input} not found`);
+        return Promise.resolve();
+      }
+      const outputPath = path.join(OUTPUT_DIR, config.output);
+      return generateScreenshot(browser, config.input, outputPath, config.width, config.height);
+    }));
   } finally {
     await browser.close();
   }
 
   console.log('\nDone.\n');
-  for (const lang of LANGUAGES) {
-    const langDir = path.join(OUTPUT_DIR, lang);
-    const files = fs.readdirSync(langDir).filter(f => f.endsWith('.png'));
-    console.log(`  [${lang}]`);
-    files.forEach(file => {
-      const size = (fs.statSync(path.join(langDir, file)).size / 1024).toFixed(1);
-      console.log(`    ${file} (${size} KB)`);
-    });
-  }
+  const files = fs.readdirSync(OUTPUT_DIR).filter(f => f.endsWith('.png'));
+  files.forEach(file => {
+    const size = (fs.statSync(path.join(OUTPUT_DIR, file)).size / 1024).toFixed(1);
+    console.log(`  ${file} (${size} KB)`);
+  });
 }
 
 main().catch(error => {

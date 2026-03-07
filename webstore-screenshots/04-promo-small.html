@@ -106,7 +106,7 @@
     <div class="circle circle2"></div>
   </div>
 
-  <div class="version-badge">v1.0.4</div>
+  <div class="version-badge">v1.0.6</div>
 
   <div class="content">
     <div class="logo">🎬</div>
@@ -133,19 +133,5 @@
     </div>
   </div>
 
-  <script>
-  (() => {
-    const lang = new URLSearchParams(location.search).get('lang') || 'ja';
-    if (lang !== 'en') return;
-    document.documentElement.lang = 'en';
-    [
-      ['.subtitle', 'Enable RTX Video Super Resolution'],
-      ['.badge:nth-child(1) span:last-child', 'Auto Detect'],
-    ].forEach(([sel, text]) => {
-      const el = document.querySelector(sel);
-      if (el) el.textContent = text;
-    });
-  })();
-  </script>
 </body>
 </html>

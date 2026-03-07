@@ -4,7 +4,7 @@
     "description": "\u62e1\u5f35\u6a5f\u80fd\u540d"
   },
   "extensionDescription": {
-    "message": "\u52d5\u753b\u30b9\u30c8\u30ea\u30fc\u30df\u30f3\u30b0\u30b5\u30fc\u30d3\u30b9\u3067NVIDIA RTX Super Resolution\u3092\u6709\u52b9\u5316\u3057\u3001\u30d5\u30eb\u30b9\u30af\u30ea\u30fc\u30f3\u6642\u306e\u52d5\u753b\u54c1\u8cea\u3092\u5411\u4e0a\u3055\u305b\u307e\u3059\u3002",
+    "message": "NVIDIA RTX Video Super Resolutionが有効にならない環境で、有効にできるかもしれない拡張機能です。",
     "description": "\u62e1\u5f35\u6a5f\u80fd\u306e\u8aac\u660e"
   },
   "badgeOn": {

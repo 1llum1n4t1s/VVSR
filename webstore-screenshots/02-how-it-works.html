@@ -300,30 +300,5 @@
     </div>
   </div>
 
-  <script>
-  (() => {
-    const lang = new URLSearchParams(location.search).get('lang') || 'ja';
-    if (lang !== 'en') return;
-    document.documentElement.lang = 'en';
-    [
-      ['.main-title', 'Enhance Video Quality Automatically'],
-      ['.subtitle', 'Upscale streaming video with NVIDIA RTX Video Super Resolution'],
-      ['.before .panel-label', 'BEFORE Standard'],
-      ['.after .panel-label', 'AFTER RTX VSR'],
-      ['.before .detail-list li:nth-child(1)', '<span class="icon-bad">✕</span> Low resolution video'],
-      ['.before .detail-list li:nth-child(2)', '<span class="icon-bad">✕</span> Visible pixelation'],
-      ['.before .detail-list li:nth-child(3)', '<span class="icon-bad">✕</span> Loss of detail'],
-      ['.after .detail-list li:nth-child(1)', '<span class="icon-good">✓</span> AI super resolution'],
-      ['.after .detail-list li:nth-child(2)', '<span class="icon-good">✓</span> Sharp and clear video'],
-      ['.after .detail-list li:nth-child(3)', '<span class="icon-good">✓</span> Detail restoration'],
-      ['.feature-badge:nth-child(1) span:last-child', 'Auto Detect'],
-      ['.feature-badge:nth-child(2) span:last-child', 'RTX Processing'],
-      ['.feature-badge:nth-child(3) span:last-child', '60+ Sites'],
-    ].forEach(([sel, html]) => {
-      const el = document.querySelector(sel);
-      if (el) el.innerHTML = html;
-    });
-  })();
-  </script>
 </body>
 </html>
