@@ -131,7 +131,7 @@
       'position:fixed;width:1px;height:1px;background:#000;' +
       'opacity:0.01;pointer-events:none;z-index:2147483647;top:0;left:0;' +
       'margin:0;padding:0;will-change:transform;transform:translateZ(0);' +
-      'backface-visibility:hidden;contain:strict';
+      'backface-visibility:hidden;contain:layout paint style';
     _overlay.setAttribute('data-vsr-overlay', 'true');
 
     _insertOverlayAfterVideo(video);
